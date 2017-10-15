@@ -1,0 +1,31 @@
+version: '3.1'
+
+services:
+    phpadmin:
+        build:
+            context: ../phpadmin
+            args:
+                TZ: "America/New_York"
+        image: phpadmin:20170916
+        container_name: phpadmin
+        hostname: phpadmin
+        environment:
+            TZ: "America/New_York"
+            MYSQL_PASSWORD: ${CFG_MYSQL_PASSWORD}
+            MYSQL_ROOT_PASSWORD: ${CFG_MYSQL_ROOT_PASSWORD}
+            MYSQL_USER: ${CFG_MYSQL_USER}
+#            - PMA_ARBITRARY=1
+        ports:
+            - 8002:80
+#       volumes:
+#           - /sessions       
+#        external_links:
+#            - db_server:db
+        links:
+            - mysql:db
+        restart: unless-stopped
+        logging:
+            driver: "json-file"
+            options:
+                max-size: "10m"
+                max-file: "3"
