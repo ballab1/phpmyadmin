@@ -16,7 +16,7 @@ COPY phpmyadmin.keyring /
 COPY etc /etc/
 
 # Copy main script
-COPY run.sh /run.sh
+COPY docker-entrypoint.sh /
 
 # Install dependencies
 # Download tarball, verify it using gpg and extract
@@ -28,7 +28,7 @@ RUN set -e \
     && cp /usr/share/zoneinfo/$TZ /etc/timezone \
     && cp /usr/share/zoneinfo/$TZ /etc/localtime \
     && apk add --no-cache $PACKAGES \
-    && chmod u+rwx /run.sh \
+    && chmod u+rwx /docker-entrypoint.sh \
     && GNUPGHOME="$(mktemp -d)" \
     && export GNUPGHOME \
     && apk add --no-cache curl gnupg \
@@ -40,7 +40,7 @@ RUN set -e \
     && tar xzf phpMyAdmin.tar.gz \
     && rm -f phpMyAdmin.tar.gz phpMyAdmin.tar.gz.asc \
     && mv phpMyAdmin-$VERSION-all-languages /www \
-    && rm -rf /www/setup/ /www/examples/ /www/test/ /www/po/ /www/composer.json /www/RELEASE-DATE-$VERSION \
+    && rm -rf /www/setup/ /www/examples/ /www/r/ /www/po/ /www/composer.json /www/RELEASE-DATE-$VERSION \
     && sed -i "s@define('CONFIG_DIR'.*@define('CONFIG_DIR', '/etc/phpmyadmin/');@" /www/libraries/vendor_config.php \
     && chown -R root:nobody /www \
     && find /www -type d -exec chmod 750 {} \; \
@@ -48,7 +48,7 @@ RUN set -e \
     && mkdir /sessions
 
 # We expose phpMyAdmin on port 80
-EXPOSE 80
+#EXPOSE 80
 
-ENTRYPOINT [ "/run.sh" ]
+ENTRYPOINT [ "/docker-entrypoint.sh" ]
 CMD ["phpmyadmin"]
