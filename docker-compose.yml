@@ -4,9 +4,7 @@ services:
     phpadmin:
         build:
             context: ../phpadmin
-            args:
-                TZ: "America/New_York"
-        image: phpadmin:20171210
+        image: phpadmin:20171219
         container_name: phpadmin
         hostname: phpadmin
         environment:
@@ -17,12 +15,13 @@ services:
 #            - PMA_ARBITRARY=1
         ports:
             - 8002:80
-#       volumes:
-#           - /sessions       
+        volumes:
+            - ../phpadmin/vols/log:/var/log
+#           - ../phpadmin/vols/sessions       
 #        external_links:
 #            - db_server:db
-        links:
-            - mysql:db
+#        links:
+#            - "172.18.0.5":db
         restart: unless-stopped
         logging:
             driver: "json-file"
