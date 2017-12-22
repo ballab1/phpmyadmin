@@ -5,13 +5,12 @@ set -o errexit
 set -o nounset 
 #set -o verbose
 
+declare -r CONTAINER='PHPADMIN'
 
 export TZ='America/New_York'
-export DBUSER="${DBUSER?'Envorinment variable DBUSER must be defined'}"
-export DBPASS="${DBPASS?'Envorinment variable DBPASS must be defined'}"
-export DBHOST="${DBHOST:-'mysql'}"
-
 declare -r TOOLS="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"  
+
+
 declare -r PHPADM_PKGS="curl tzdata php7-session php7-mysqli php7-mbstring php7-xml php7-gd php7-zlib php7-bz2 php7-zip php7-openssl php7-curl php7-opcache php7-json nginx php7-fpm supervisor"
 
 
@@ -71,20 +70,6 @@ function die() {
 }  
 
 #############################################################################
-function installAlpinePackages() {
-    apk update
-    apk add --no-cache $PHPADM_PKGS
-}
-
-#############################################################################
-function installTimezone() {
-    echo "$TZ" > /etc/TZ
-    cp /usr/share/zoneinfo/$TZ /etc/timezone
-    cp /usr/share/zoneinfo/$TZ /etc/localtime
-}
-
-
-#############################################################################
 function cleanup()
 {
     printf "\nclean up\n"
@@ -95,7 +80,6 @@ function cleanup()
     rm -rf "${WWW}/composer.json"
     rm -rf "${WWW}/RELEASE-DATE-$VERSION"
 }
-
 
 #############################################################################
 function createUserAndGroup()
@@ -175,7 +159,13 @@ function fixupNginxLogDirecory()
     fi
 }
 
-
+#############################################################################
+function header()
+{
+    local -r bars='+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++'
+    printf "\n\n\e[1;34m%s\nBuilding container: \e[0m%s\e[1;34m\n%s\e[0m\n" $bars $CONTAINER $bars
+}
+ 
 #############################################################################
 function install_CUSTOMIZATIONS()
 {
@@ -192,7 +182,6 @@ function install_CUSTOMIZATIONS()
     [[ -d /run/nginx ]]                  || mkdir -p /run/nginx
 }
 
-
 #############################################################################
 function install_MYPHP_ADMIN()
 {
@@ -205,6 +194,18 @@ function install_MYPHP_ADMIN()
     sed -i "s@define('CONFIG_DIR'.*@define('CONFIG_DIR', '/etc/phpmyadmin/');@" "${WWW}/libraries/vendor_config.php"
 }
 
+############################################################################
+function installAlpinePackages() {
+    apk update
+    apk add --no-cache $PHPADM_PKGS
+}
+
+#############################################################################
+function installTimezone() {
+    echo "$TZ" > /etc/TZ
+    cp /usr/share/zoneinfo/$TZ /etc/timezone
+    cp /usr/share/zoneinfo/$TZ /etc/localtime
+}
 
 #############################################################################
 function setPermissions()
@@ -221,7 +222,6 @@ www_group='nobody'
     chown "${www_user}:${www_group}" -R "${WWW}"
 }
 
-
 #############################################################################
 
 trap catch_error ERR
@@ -230,12 +230,15 @@ trap catch_pipe PIPE
 
 set -o verbose
 
+header
+export MYSQL_PASSWORD="${MYSQL_PASSWORD?'Envorinment variable MYSQL_PASSWORD must be defined'}"
+export MYSQL_ROOT_PASSWORD="${MYSQL_ROOT_PASSWORD?'Envorinment variable MYSQL_ROOT_PASSWORD must be defined'}"
+export MYSQL_USER="${MYSQL_USER?'Envorinment variable MYSQL_USER must be defined'}"
+
 installAlpinePackages
 installTimezone
-
 #createUserAndGroup "${www_user}" "${www_uid}" "${www_group}" "${www_gid}" "${WWW}" /sbin/nologin
 #createUserAndGroup "${nagios_user}" "${nagios_uid}" "${nagios_group}" "${nagios_gid}" "${NAGIOS_HOME}" /bin/bash
-
 downloadFiles
 fixupNginxLogDirecory
 install_MYPHP_ADMIN
