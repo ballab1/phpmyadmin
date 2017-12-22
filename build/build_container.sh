@@ -5,16 +5,21 @@ set -o errexit
 set -o nounset 
 #set -o verbose
 
+
+export TZ='America/New_York'
+export DBUSER="${DBUSER?'Envorinment variable DBUSER must be defined'}"
+export DBPASS="${DBPASS?'Envorinment variable DBPASS must be defined'}"
+export DBHOST="${DBHOST:-'mysql'}"
+
 declare -r TOOLS="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"  
+declare -r PHPADM_PKGS="curl tzdata php7-session php7-mysqli php7-mbstring php7-xml php7-gd php7-zlib php7-bz2 php7-zip php7-openssl php7-curl php7-opcache php7-json nginx php7-fpm supervisor"
+
 
 # Nagios::Object perl module
 declare -r PHPADM_VERSION=${PHPADM_VERSION:-'4.7.4'}  
 declare -r PHPADM_FILE="phpMyAdmin-${PHPADM_VERSION}-all-languages.tar.gz"
 declare -r PHPADM_URL="https://files.phpmyadmin.net/phpMyAdmin/${PHPADM_VERSION}/phpMyAdmin-${PHPADM_VERSION}-all-languages.tar.gz"
 declare -r PHPADM_SHA256="fd1a92959553f5d87b3a2163a26b62d6314309096e1ee5e89646050457430fd2"
-
-declare -r PHPADM_PKGS=" curl tzdata php7-session php7-mysqli php7-mbstring php7-xml php7-gd php7-zlib php7-bz2 php7-zip php7-openssl php7-curl php7-opcache php7-json nginx php7-fpm supervisor"
-declare -r TZ='America/New_York'
 
 
 #directories
@@ -66,7 +71,7 @@ function die() {
 }  
 
 #############################################################################
-function installPackages() {
+function installAlpinePackages() {
     apk update
     apk add --no-cache $PHPADM_PKGS
 }
@@ -106,7 +111,7 @@ function createUserAndGroup()
     local wanted=$( printf '%s:%s' $group $gid )
     local nameMatch=$( getent group "${group}" | awk -F ':' '{ printf "%s:%s",$1,$3 }' )
     local idMatch=$( getent group "${gid}" | awk -F ':' '{ printf "%s:%s",$1,$3 }' )
-    printf "group/gid (%s):  is currently (%s)/(%s)\n" "$wanted" "$nameMatch" "$idMatch"           
+    printf "\e[1;34mINFO: group/gid (%s):  is currently (%s)/(%s)\e[0m\n" "$wanted" "$nameMatch" "$idMatch"           
 
     if [[ $wanted != $nameMatch  ||  $wanted != $idMatch ]]; then
         printf "\ncreate group:  %s\n" $group
@@ -119,7 +124,7 @@ function createUserAndGroup()
     wanted=$( printf '%s:%s' $user $uid )
     nameMatch=$( getent passwd "${user}" | awk -F ':' '{ printf "%s:%s",$1,$3 }' )
     idMatch=$( getent passwd "${uid}" | awk -F ':' '{ printf "%s:%s",$1,$3 }' )
-    printf "user/uid (%s):  is currently (%s)/(%s)\n" "$wanted" "$nameMatch" "$idMatch"    
+    printf "\e[1;34mINFO: user/uid (%s):  is currently (%s)/(%s)\e[0m\n" "$wanted" "$nameMatch" "$idMatch"    
     
     if [[ $wanted != $nameMatch  ||  $wanted != $idMatch ]]; then
         printf "create user: %s\n" $user
@@ -172,7 +177,7 @@ function fixupNginxLogDirecory()
 
 
 #############################################################################
-function installCUSTOMIZATIONS()
+function install_CUSTOMIZATIONS()
 {
     printf "\nAdd configuration and customizations\n"
 
@@ -189,7 +194,7 @@ function installCUSTOMIZATIONS()
 
 
 #############################################################################
-function installMYPHP_ADMIN()
+function install_MYPHP_ADMIN()
 {
     local -r file="$PHPADM_FILE"
 
@@ -225,7 +230,7 @@ trap catch_pipe PIPE
 
 set -o verbose
 
-installPackages
+installAlpinePackages
 installTimezone
 
 #createUserAndGroup "${www_user}" "${www_uid}" "${www_group}" "${www_gid}" "${WWW}" /sbin/nologin
@@ -233,8 +238,8 @@ installTimezone
 
 downloadFiles
 fixupNginxLogDirecory
-installMYPHP_ADMIN
-installCUSTOMIZATIONS
+install_MYPHP_ADMIN
+install_CUSTOMIZATIONS
 setPermissions
 cleanup
 exit 0

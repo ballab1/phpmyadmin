@@ -4,7 +4,12 @@ services:
     phpadmin:
         build:
             context: ../phpadmin
-        image: phpadmin:20171219
+            args:
+                TZ: "America/New_York"
+                MYSQL_PASSWORD: ${CFG_MYSQL_PASSWORD}
+                MYSQL_ROOT_PASSWORD: ${CFG_MYSQL_ROOT_PASSWORD}
+                MYSQL_USER: ${CFG_MYSQL_USER}
+        image: phpadmin:20171222
         container_name: phpadmin
         hostname: phpadmin
         environment:
