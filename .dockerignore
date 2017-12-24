@@ -1,2 +1,6 @@
-config.secret.inc.php
-log
+vols/*
+docker-compose.yml
+README.md
+License
+.git*
+.lfs*
