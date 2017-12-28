@@ -231,9 +231,9 @@ trap catch_pipe PIPE
 set -o verbose
 
 header
-export MYSQL_PASSWORD="${MYSQL_PASSWORD?'Envorinment variable MYSQL_PASSWORD must be defined'}"
-export MYSQL_ROOT_PASSWORD="${MYSQL_ROOT_PASSWORD?'Envorinment variable MYSQL_ROOT_PASSWORD must be defined'}"
-export MYSQL_USER="${MYSQL_USER?'Envorinment variable MYSQL_USER must be defined'}"
+declare -r MYSQL_PASSWORD="${MYSQL_PASSWORD:?'Envorinment variable MYSQL_PASSWORD must be defined'}"
+declare -r MYSQL_ROOT_PASSWORD="${MYSQL_ROOT_PASSWORD:?'Envorinment variable MYSQL_ROOT_PASSWORD must be defined'}"
+declare -r MYSQL_USER="${MYSQL_USER:?'Envorinment variable MYSQL_USER must be defined'}"
 
 installAlpinePackages
 installTimezone
