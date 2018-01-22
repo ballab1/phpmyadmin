@@ -29,10 +29,6 @@ declare WWW=/www
 #declare www_uid=${www_uid:-82}
 #declare www_group=${www_group:-'www-data'}
 #declare www_gid=${www_gid:-82}
-#declare nagios_user=${nagios_user:-'nagios'}
-#declare nagios_uid=${nagios_uid:-1002}
-#declare nagios_group=${nagios_group:-'nagios'}
-#declare nagios_gid=${nagios_gid:-1002}
 
 # global exceptions
 declare -i dying=0
@@ -239,8 +235,6 @@ declare -r MYSQL_USER="${MYSQL_USER:?'Environment variable MYSQL_USER must be de
 
 installAlpinePackages
 installTimezone
-#createUserAndGroup "${www_user}" "${www_uid}" "${www_group}" "${www_gid}" "${WWW}" /sbin/nologin
-#createUserAndGroup "${nagios_user}" "${nagios_uid}" "${nagios_group}" "${nagios_gid}" "${NAGIOS_HOME}" /bin/bash
 downloadFiles
 fixupNginxLogDirecory
 install_MYPHP_ADMIN
