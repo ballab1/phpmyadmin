@@ -19,7 +19,7 @@ COPY build /tmp/
 RUN set -o verbose \
     && chmod u+rwx /tmp/container/build.sh \
     && /tmp/container/build.sh 'PHPADMIN'
-#RUN rm -rf /tmp/* 
+RUN rm -rf /tmp/* 
 
 
 # We expose phpMyAdmin on port 80
