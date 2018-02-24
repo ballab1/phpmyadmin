@@ -17,8 +17,8 @@ COPY build /tmp/
 
 # build content
 RUN set -o verbose \
-    && chmod u+rwx /tmp/container/build.sh \
-    && /tmp/container/build.sh 'PHPADMIN'
+    && chmod u+rwx /tmp/build.sh \
+    && /tmp/build.sh 'PHPADMIN'
 RUN rm -rf /tmp/* 
 
 
