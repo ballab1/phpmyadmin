@@ -1,6 +1,5 @@
 #!/bin/bash
 
-source "${CBF['action']}/03.downloads/01.PHPADMIN"
 
 tar xzf "${PHPADMIN['file']}" -C "/tmp"
 
