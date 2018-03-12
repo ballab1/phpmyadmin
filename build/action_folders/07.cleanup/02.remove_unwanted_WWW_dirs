@@ -1,7 +1,5 @@
 #!/bin/bash
 
-source "${CBF['action']}/03.downloads/01.PHPADMIN"
-
 rm -rf "${WWW}/setup/"
 rm -rf "${WWW}/examples/"
 rm -rf "${WWW}/r/"
