@@ -4,4 +4,4 @@ declare -ar env_phpadmin=(
     'WWW="${WWW:-/www}"'
 )
 
-lib.updateRuntimeEnvironment "${env_phpadmin[*]}" 
+crf.updateRuntimeEnvironment "${env_phpadmin[*]}" 
