@@ -4,18 +4,19 @@ services:
     phpadmin:
         build:
             args:
+                CBF_VERSION: ${CBF_VERSION:-dev}
                 CONTAINER_NAME: phpmyadmin
                 CONTAINER_VERSION: 1.0.6
-                DEBUG_TRACE: 0
-                FROM_BASE: supervisord:20180314
+                FROM_BASE: supervisord:latest
             cache_from:
                 - alpine:3.6
-                - base_container:20180314
-                - supervisord:20180314
+                - base_container:latest
+                - supervisord:latest
             context: .
             dockerfile: Dockerfile
         container_name: phpadmin
         environment:
+            DEBUG_TRACE: ${DEBUG_TRACE:-0}
             MYSQL_PASSWORD: ${CFG_PASS}
             MYSQL_ROOT_PASSWORD: ${CFG_PASS}
             MYSQL_USER: ${CFG_USER}
@@ -23,7 +24,7 @@ services:
 #        external_links:
 #            - db_server:db
         hostname: phpadmin
-        image: phpadmin:20180314
+        image: phpadmin:latest
 #        links:
 #            - 172.18.0.5:db
         logging:
