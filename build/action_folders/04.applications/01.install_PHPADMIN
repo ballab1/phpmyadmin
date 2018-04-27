@@ -4,5 +4,5 @@
 tar xzf "${PHPADMIN['file']}" -C "/tmp"
 
 mkdir -p "${WWW}"
-mv "/tmp/phpMyAdmin-${PHPADMIN['version']}-all-languages/"* "${WWW}"
+mv "${PHPADMIN['dir']}/"* "${WWW}"
 sed -i "s@define('CONFIG_DIR'.*@define('CONFIG_DIR', '/etc/phpmyadmin/');@" "${WWW}/libraries/vendor_config.php"
