@@ -1,32 +1,38 @@
-version: '3.5'
+version: '3.3'
 
 services:
     phpadmin:
         build:
             args:
-                CBF_VERSION: ${CBF_VERSION:-dev}
-                CONTAINER_NAME: phpmyadmin
-                CONTAINER_VERSION: 1.0.6
-                FROM_BASE: supervisord:${CONTAINER_TAG:-latest}
+                CBF_VERSION: "${CBF_VERSION}"
+                CONTAINER_NAME: phpadmin
+                CONTAINER_VERSION: ${CONTAINER_VERSION:-3.0.0}
+                FROM_BASE: ${DOCKER_REGISTRY:-}php7:${CONTAINER_TAG:-latest}
             cache_from:
-                - alpine:3.6
-                - base_container:${CONTAINER_TAG:-latest}
-                - supervisord:${CONTAINER_TAG:-latest}
+                - ${DOCKER_REGISTRY:-}alpine:3.8
+                - ${DOCKER_REGISTRY:-}base_container:${CONTAINER_TAG:-latest}
+                - ${DOCKER_REGISTRY:-}supervisord:${CONTAINER_TAG:-latest}
+                - ${DOCKER_REGISTRY:-}nginx_base:${CONTAINER_TAG:-latest}
+                - ${DOCKER_REGISTRY:-}php7:${CONTAINER_TAG:-latest}
             context: .
             dockerfile: Dockerfile
         container_name: phpadmin
         environment:
             DEBUG_TRACE: ${DEBUG_TRACE:-0}
-            MYSQL_PASSWORD: ${CFG_PASS}
-            MYSQL_ROOT_PASSWORD: ${CFG_PASS}
-            MYSQL_USER: ${CFG_USER}
+            MYSQL_PASSWORD: $CFG_PASS
+            MYSQL_ROOT_PASSWORD: $CFG_PASS
+            MYSQL_USER: $CFG_USER
 #            PMA_ARBITRARY: 1
-#        external_links:
-#            - db_server:db
+            PMA_HOST: mysql
+            PMA_VERBOSE: 1
+            PMA_USER: $CFG_USER
+            PMA_PASSWORD: $CFG_PASS
+            SUPERVISORD_PASS: $CFG_PASS
+            SUPERVISORD_USER: $CFG_USER
         hostname: phpadmin
-        image: phpadmin:${CONTAINER_TAG:-latest}
+        image: ${DOCKER_REGISTRY:-}phpadmin:${CONTAINER_TAG:-latest}
 #        links:
-#            - 172.18.0.5:db
+#            - 172.18.0.5:mysql
         logging:
             driver: json-file
             options:

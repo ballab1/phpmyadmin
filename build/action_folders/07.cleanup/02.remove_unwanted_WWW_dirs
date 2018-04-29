@@ -1,8 +1,0 @@
-#!/bin/bash
-
-rm -rf "${WWW}/setup/"
-rm -rf "${WWW}/examples/"
-rm -rf "${WWW}/r/"
-rm -rf "${WWW}/po/"
-rm -rf "${WWW}/composer.json"
-rm -rf "${WWW}/RELEASE-DATE-${PHPADMIN['version']}"
