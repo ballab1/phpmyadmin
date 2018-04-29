@@ -1,0 +1,13 @@
+#!/bin/bash
+
+#rm -rf "${WWW}/setup/"
+#rm -rf "${WWW}/examples/"
+#rm -rf "${WWW}/r/"
+#rm -rf "${WWW}/po/"
+#rm -rf "${WWW}/composer.json"
+rm -rf "${WWW}/RELEASE-DATE-${PHPADMIN['version']}"
+rm -rf "${WWW}/*.md"
+rm -rf "${WWW}/ChangeLog"
+rm -rf "${WWW}/DCO"
+rm -rf "${WWW}/LICENSE"
+rm -rf "${WWW}/README"
