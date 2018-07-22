@@ -6,7 +6,6 @@ services:
             args:
                 CBF_VERSION: "${CBF_VERSION}"
                 CONTAINER_NAME: phpadmin
-                CONTAINER_VERSION: ${CONTAINER_VERSION:-3.0.0}
                 FROM_BASE: ${DOCKER_REGISTRY:-}php7:${CONTAINER_TAG:-latest}
             cache_from:
                 - ${DOCKER_REGISTRY:-}alpine:3.8
@@ -31,6 +30,14 @@ services:
             SUPERVISORD_USER: $CFG_USER
         hostname: phpadmin
         image: ${DOCKER_REGISTRY:-}phpadmin:${CONTAINER_TAG:-latest}
+        labels:
+            container.fingerprint: $CONTAINER_FINGERPRINT
+            container.git.branch: $CONTAINER_GIT_BRANCH
+            container.git.commit: $CONTAINER_GIT_COMMIT
+            container.git.url: $CONTAINER_GIT_URL
+            container.origin: $CONTAINER_ORIGIN
+            container.original.name: phpadmin
+            container.version: ${CONTAINER_VERSION:-3.0.0}
 #        links:
 #            - 172.18.0.5:mysql
         logging:
@@ -43,4 +50,4 @@ services:
 #        restart: unless-stopped
         volumes:
             - ./vols/log:/var/log
-#           - ./vols/sessions       
+#           - ./vols/sessions
