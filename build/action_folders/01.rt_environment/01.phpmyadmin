@@ -1,0 +1,7 @@
+#!/bin/bash
+
+declare -ar env_pgpmyadmin=(
+    "PHPMYADMIN_VERSION=${PHPMYADMIN_VERSION:?}"
+)
+
+crf.updateRuntimeEnvironment "${env_pgpmyadmin[@]}"  

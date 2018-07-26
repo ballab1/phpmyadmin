@@ -1,10 +1,10 @@
 #!/bin/bash
 
 cd /tmp
-tar xzf "${PHPADMIN['file']}"
+tar xzf "${PHPMYADMIN['file']}"
 
 mkdir -p "$WWW"
-cp -R "${PHPADMIN['dir']}/"* "$WWW"
+cp -R "${PHPMYADMIN['dir']}/"* "$WWW"
 cd "$WWW"
 
 #tar xzf "${COMPOSER['file']}"

@@ -1,9 +1,0 @@
-#!/bin/bash
-
-declare -A PHPADMIN=(
-    ['version']=${PHPADMIN_VERSION:-4.8.2}
-    ['file']="/tmp/phpMyAdmin-${PHPADMIN['version']}-english.tar.gz"
-    ['url']="https://files.phpmyadmin.net/phpMyAdmin/${PHPADMIN['version']}/phpMyAdmin-${PHPADMIN['version']}-english.tar.gz"
-    ['sha256']="e4173e61b8906e425d40c24ca78cc69740262150626b96d03532911d03cc86a4"
-    ['dir']="/tmp/phpMyAdmin-${PHPADMIN['version']}-english"
-)

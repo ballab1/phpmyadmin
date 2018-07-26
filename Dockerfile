@@ -1,8 +1,8 @@
-ARG FROM_BASE=${DOCKER_REGISTRY:-}php5:${CONTAINER_TAG:-latest}
+ARG FROM_BASE=${DOCKER_REGISTRY:-}php7:${CONTAINER_TAG:-latest}
 FROM $FROM_BASE 
 
 # name and version of this docker image
-ARG CONTAINER_NAME=phpadmin
+ARG CONTAINER_NAME=phpmyadmin
 # Specify CBF version to use with our configuration and customizations
 ARG CBF_VERSION="${CBF_VERSION}"
 
@@ -18,6 +18,10 @@ ARG MYSQL_PASSWORD="${CFG_PASS}"
 ARG MYSQL_ROOT_PASSWORD="${CFG_PASS}"
 ARG MYSQL_USER="${CFG_USER}"
 
+# phpmyadmin version being bundled in this docker image
+ARG PHPMYADMIN_VERSION=${PHPADMIN_VERSION:-4.8.2}
+LABEL phpmyadmin.version=$PHPMYADMIN_VERSION
+
 
 # build content
 RUN set -o verbose \
@@ -32,4 +36,4 @@ RUN [ $DEBUG_TRACE != 0 ] || rm -rf /tmp/*
 
 ENTRYPOINT [ "docker-entrypoint.sh" ]
 #CMD ["$CONTAINER_NAME"]
-CMD ["phpadmin"]
+CMD ["phpmyadmin"]
