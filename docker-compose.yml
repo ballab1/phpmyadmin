@@ -4,7 +4,7 @@ services:
     phpadmin:
         build:
             args:
-                CBF_VERSION: "${CBF_VERSION}"
+                CBF_VERSION: "${CBF_VERSION:-}"
                 CONTAINER_NAME: phpadmin
                 FROM_BASE: ${DOCKER_REGISTRY:-}php7:${BASE_TAG:-latest}
             cache_from:
@@ -29,7 +29,7 @@ services:
             SUPERVISORD_PASS: $CFG_PASS
             SUPERVISORD_USER: $CFG_USER
         hostname: phpadmin
-        image: ${DOCKER_REGISTRY:-}phpadmin:${CONTAINER_TAG:-latest}
+        image: ${DOCKER_REGISTRY:-}phpmyadmin:${CONTAINER_TAG:-latest}
         labels:
             container.fingerprint: $CONTAINER_FINGERPRINT
             container.git.branch: $CONTAINER_GIT_BRANCH
