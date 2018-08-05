@@ -5,7 +5,7 @@ services:
         build:
             args:
                 CBF_VERSION: "${CBF_VERSION:-}"
-                CONTAINER_NAME: phpadmin
+                CONTAINER_NAME: phpmyadmin
                 FROM_BASE: ${DOCKER_REGISTRY:-}php7:${BASE_TAG:-latest}
             cache_from:
                 - ${DOCKER_REGISTRY:-}alpine:3.8
@@ -24,7 +24,7 @@ services:
                 container.origin: $CONTAINER_ORIGIN
                 container.original.name: phpmyadmin
                 container.version: ${CONTAINER_VERSION:-3.0.0}
-        container_name: phpadmin
+        container_name: phpmyadmin
         environment:
             DEBUG_TRACE: ${DEBUG_TRACE:-0}
             MYSQL_PASSWORD: $CFG_PASS
