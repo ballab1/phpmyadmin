@@ -37,7 +37,7 @@ services:
             SUPERVISORD_PASS: $CFG_PASS
             SUPERVISORD_USER: $CFG_USER
         hostname: phpadmin
-        image: ${DOCKER_REGISTRY:-}phpmyadmin:${CONTAINER_TAG:-latest}
+        image: ${DOCKER_REGISTRY:-}phpmyadmin/4.8.2:${CONTAINER_TAG:-latest}
 #        links:
 #            - 172.18.0.5:mysql
         logging:
