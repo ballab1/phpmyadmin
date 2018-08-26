@@ -4,21 +4,21 @@ services:
     phpadmin:
         build:
             args:
-                CBF_VERSION: "${CBF_VERSION:-}"
+                CBF_VERSION: ${CBF_VERSION:-}
                 CONTAINER_NAME: phpmyadmin
-                FROM_BASE: ${DOCKER_REGISTRY:-}php/7.2.8-r1:${BASE_TAG:-latest}
+                FROM_BASE: ${DOCKER_REGISTRY:-}${OS:-}php/7.2.8-r1:${BASE_TAG:-latest}
             cache_from:
-                - ${DOCKER_REGISTRY:-}alpine:3.8
-                - ${DOCKER_REGISTRY:-}base_container:${BASE_TAG:-latest}
-                - ${DOCKER_REGISTRY:-}supervisord:${BASE_TAG:-latest}
-                - ${DOCKER_REGISTRY:-}nginx_base/1.15.1:${BASE_TAG:-latest}
-                - ${DOCKER_REGISTRY:-}php/7.2.8-r1:${BASE_TAG:-latest}
+                - ${DOCKER_REGISTRY:-}${OS:-}alpine:3.8
+                - ${DOCKER_REGISTRY:-}${OS:-}base_container:${BASE_TAG:-latest}
+                - ${DOCKER_REGISTRY:-}${OS:-}supervisord:${BASE_TAG:-latest}
+                - ${DOCKER_REGISTRY:-}${OS:-}nginx_base/1.15.1:${BASE_TAG:-latest}
+                - ${DOCKER_REGISTRY:-}${OS:-}php/7.2.8-r1:${BASE_TAG:-latest}
             context: .
             dockerfile: Dockerfile
             labels:
                 container.build.time: $CONTAINER_BUILD_TIME
                 container.fingerprint: $CONTAINER_FINGERPRINT
-                container.git.branch: $CONTAINER_GIT_BRANCH
+                container.git.refs: $CONTAINER_GIT_REFS
                 container.git.commit: $CONTAINER_GIT_COMMIT
                 container.git.url: $CONTAINER_GIT_URL
                 container.origin: $CONTAINER_ORIGIN
@@ -37,7 +37,7 @@ services:
             SUPERVISORD_PASS: $CFG_PASS
             SUPERVISORD_USER: $CFG_USER
         hostname: phpadmin
-        image: ${DOCKER_REGISTRY:-}phpmyadmin/4.8.2:${CONTAINER_TAG:-latest}
+        image: ${DOCKER_REGISTRY:-}${OS:-}phpmyadmin/4.8.2:${CONTAINER_TAG:-latest}
 #        links:
 #            - 172.18.0.5:mysql
         logging:
