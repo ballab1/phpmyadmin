@@ -10,18 +10,26 @@ $i = 0;
 
 /* Server: mysql [1] */
 $i++;
-$cfg['Servers'][$i]['verbose'] = 'mysql';
-$cfg['Servers'][$i]['host'] = 'mysql';
-$cfg['Servers'][$i]['port'] = 3306;
+$cfg['Servers'][$i]['verbose'] = getenv('PMA_VERBOSE');
+$cfg['Servers'][$i]['host'] = getenv('PMA_HOST');
+$cfg['Servers'][$i]['port'] = getenv('PMA_PORT');
 $cfg['Servers'][$i]['socket'] = '';
 $cfg['Servers'][$i]['ssl'] = true;
 $cfg['Servers'][$i]['auth_type'] = 'config';
-$cfg['Servers'][$i]['user'] = 'root';
-$cfg['Servers'][$i]['password'] = '123Oleary';
+$cfg['Servers'][$i]['user'] = getenv('PMA_USER');
+
+$pma_password = getenv('PMA_PASSWORD');
+if ($pma_password != NULL) {
+    $cfg['Servers'][$i]['password'] = $pma_password;
+}
+elseif (getenv('PMA_PASSWORD_FILE') != NULL) {
+    require('/etc/phpmyadmin/config.password.inc.php');
+}
+
 
 /* End of servers configuration */
+require '/etc/phpmyadmin/config.secret.inc.php';
 
-$cfg['blowfish_secret'] = 'Tgf<dVX4_2pug@!,&~a#57a__3|t^wFG';
 $cfg['DefaultLang'] = 'en';
 $cfg['ServerDefault'] = 1;
 $cfg['UploadDir'] = '';
