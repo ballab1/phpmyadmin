@@ -6,6 +6,7 @@ declare -A PHPMYADMIN=(
     ['file']="/tmp/phpMyAdmin-${PHPMYADMIN['version']}-${PHPMYADMIN['language']}.tar.gz"
     ['url']="https://files.phpmyadmin.net/phpMyAdmin/${PHPMYADMIN['version']}/phpMyAdmin-${PHPMYADMIN['version']}-${PHPMYADMIN['language']}.tar.gz"
     ['sha256_4.8.2']="e4173e61b8906e425d40c24ca78cc69740262150626b96d03532911d03cc86a4"
+    ['sha256_4.8.3']="fdf1cd8dfa66378c3aed9b4922812716fb22d242aeab8f8c0e7174b75d888374"
     ['sha256']="${PHPMYADMIN['sha256_'${PHPMYADMIN['version']}]}"
     ['dir']="/tmp/phpMyAdmin-${PHPMYADMIN['version']}-${PHPMYADMIN['language']}"
 )

@@ -1,4 +1,4 @@
-ARG FROM_BASE=${DOCKER_REGISTRY:-}php/7.2.8-r1:${BASE_TAG:-latest}
+ARG FROM_BASE=${DOCKER_REGISTRY:-}${OS:-}php/7.2.8-r1:${BASE_TAG:-latest}
 FROM $FROM_BASE 
 
 # name and version of this docker image
@@ -19,7 +19,7 @@ ARG MYSQL_ROOT_PASSWORD="${CFG_PASS}"
 ARG MYSQL_USER="${CFG_USER}"
 
 # phpmyadmin version being bundled in this docker image
-ARG PHPMYADMIN_VERSION=4.8.2
+ARG PHPMYADMIN_VERSION=4.8.3
 LABEL phpmyadmin.version=$PHPMYADMIN_VERSION
 
 
