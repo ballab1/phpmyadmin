@@ -1,7 +1,7 @@
 version: '3.3'
 
 services:
-    phpadmin:
+    phpmyadmin:
         build:
             args:
                 CBF_VERSION: ${CBF_VERSION:-}
@@ -42,7 +42,7 @@ services:
 #            PWD_PROTECTED: 'true'
 #            WEB_USER_ID: $CFG_USER
 #            WEB_USER_PASS_FILE: /run/secrets/web_user.pwd
-        hostname: phpadmin
+        hostname: phpmyadmin
         image: ${DOCKER_REGISTRY:-}${CONTAINER_OS:-}phpmyadmin/${PHPMYADMIN_VERSION:-4.8.3}:${CONTAINER_TAG:-latest}
 #        links:
 #            - 172.18.0.5:mysql
