@@ -1,0 +1,21 @@
+#!/bin/bash
+
+cd /tmp
+tar xzf "${PHPMYADMIN['file']}"
+
+mkdir -p "$WWW"
+cp -R "${PHPMYADMIN['dir']}/"* "$WWW"
+cd "$WWW"
+
+#tar xzf "${COMPOSER['file']}"
+#php "${COMPOSER['dir']}" --install-dir=/usr/bin --filename=composer
+#"${COMPOSER['dir']}/bin/composer" update --no-dev
+
+rm 404.html CODE_OF_CONDUCT.md CONTRIBUTING.md
+rm -rf examples
+
+declare cfgFile="${WWW}/libraries/vendor_config.php"
+term.log "    setting CONFIG_DIR in ${cfgFile} to '/etc/phpmyadmin/'\n"
+sed -i "s@define('CONFIG_DIR'.*@define('CONFIG_DIR', '/etc/phpmyadmin/');@" "$cfgFile"
+
+crf.fixupDirectory "$WWW" "$WWW_UID"

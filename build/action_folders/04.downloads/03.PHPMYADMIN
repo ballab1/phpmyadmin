@@ -1,0 +1,13 @@
+#!/bin/bash
+
+declare -A PHPMYADMIN=()
+PHPMYADMIN['version']=${PHPMYADMIN_VERSION:?}
+PHPMYADMIN['language']=english
+PHPMYADMIN['file']="/tmp/phpMyAdmin-${PHPMYADMIN['version']}-${PHPMYADMIN['language']}.tar.gz"
+PHPMYADMIN['dir']="/tmp/phpMyAdmin-${PHPMYADMIN['version']}-${PHPMYADMIN['language']}"
+PHPMYADMIN['url']="https://files.phpmyadmin.net/phpMyAdmin/${PHPMYADMIN['version']}/phpMyAdmin-${PHPMYADMIN['version']}-${PHPMYADMIN['language']}.tar.gz"
+PHPMYADMIN['sha256_4.8.2']="e4173e61b8906e425d40c24ca78cc69740262150626b96d03532911d03cc86a4"
+PHPMYADMIN['sha256_4.8.3']="fdf1cd8dfa66378c3aed9b4922812716fb22d242aeab8f8c0e7174b75d888374"
+PHPMYADMIN['sha256_4.8.4']="cfa4430104e4b2b5fd60dcb83c36fabc19acf9995397d2087ab0dd43a7260a77"
+PHPMYADMIN['sha256_4.8.5']="45595d55d2ee343da7d0786927021ea8f54d0d4c2e3a13289038ef65241f63df"
+PHPMYADMIN['sha256']="${PHPMYADMIN['sha256_'${PHPMYADMIN['version']}]}"
