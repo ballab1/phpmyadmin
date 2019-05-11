@@ -17,6 +17,8 @@ $cfg['Servers'][$i]['socket'] = '';
 $cfg['Servers'][$i]['ssl'] = true;
 $cfg['Servers'][$i]['auth_type'] = 'config';
 $cfg['Servers'][$i]['user'] = getenv('PMA_USER');
+$cfg['Servers'][$i]['designer_settings'] = false
+$cfg['Servers'][$i]['export_templates'] = false
 
 $pma_password = getenv('PMA_PASSWORD');
 if ($pma_password != NULL) {
@@ -34,4 +36,5 @@ $cfg['DefaultLang'] = 'en';
 $cfg['ServerDefault'] = 1;
 $cfg['UploadDir'] = '';
 $cfg['SaveDir'] = '';
+
 ?>
