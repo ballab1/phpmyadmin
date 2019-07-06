@@ -19,7 +19,7 @@ ARG MYSQL_ROOT_PASSWORD="${CFG_PASS}"
 ARG MYSQL_USER="${CFG_USER}"
 
 # phpmyadmin version being bundled in this docker image
-ARG PHPMYADMIN_VERSION=4.8.3
+ARG PHPMYADMIN_VERSION=4.9.0.1
 LABEL version.phpmyadmin=$PHPMYADMIN_VERSION
 
 
