@@ -11,7 +11,7 @@ cd "$WWW"
 #php "${COMPOSER['dir']}" --install-dir=/usr/bin --filename=composer
 #"${COMPOSER['dir']}/bin/composer" update --no-dev
 
-rm 404.html CODE_OF_CONDUCT.md CONTRIBUTING.md
+rm 404.html #CODE_OF_CONDUCT.md CONTRIBUTING.md
 rm -rf examples
 
 declare cfgFile="${WWW}/libraries/vendor_config.php"
